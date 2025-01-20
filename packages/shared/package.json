@@ -1,0 +1,8 @@
+{
+  "name": "@my-vue/shared",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/shared.esm.js",
+  "module": "dist/shared.esm.js"
+}

@@ -1,0 +1,38 @@
+{
+  "name": "my-workspace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node scripts/dev.js reactivity -f global",
+    "dev1": "node scripts/dev.js shared -f global",
+    "dev2": "node scripts/dev.js shared -f esm",
+    "lint": "eslint '**/*.{js,ts,vue,jsx,tsx}' --fix",
+    "format": "prettier --write '**/*.{js,ts,vue,jsx,tsx,json,md}'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@types/node": "^22.10.5",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "esbuild": "^0.24.2",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "execa": "^9.5.2",
+    "minimist": "^1.2.8",
+    "prettier": "^3.4.2",
+    "qs": "^6.13.1",
+    "rollup": "^4.29.1",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.6",
+    "vue": "^3.5.13",
+    "vue-tsc": "^2.2.0"
+  }
+}
