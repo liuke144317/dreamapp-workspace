@@ -6,6 +6,7 @@ interface propsInterface {
   color?: string;
   profix?: string;
   className?: string;
+  onClick?: () => void;
 }
 
 export default function SvgIcon(props: propsInterface) {
@@ -13,6 +14,7 @@ export default function SvgIcon(props: propsInterface) {
   const color = props.color ?? '';
   const profix = props.profix ?? 'icon';
   const className = props.className ?? '';
+  const onClick = props.onClick ?? null;
 
   const iconName = useMemo<string>(() => {
     return `#${profix}-${props.name}`;
@@ -28,6 +30,7 @@ export default function SvgIcon(props: propsInterface) {
       }}
       className={className}
       aria-hidden="true"
+      onClick={onClick}
     >
       <use xlinkHref={iconName} />
     </svg>
