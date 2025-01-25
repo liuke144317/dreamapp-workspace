@@ -1,7 +1,11 @@
 import SvgIcon from '@/components/SvgIcon';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge } from 'antd';
-function TopBar({ onClick, title }) {
+interface TopBarProps {
+  onClick?: () => void;
+  title?: string;
+}
+function TopBar({ onClick, title }: TopBarProps) {
   return (
     <div className="w-full border-b h-[60px] flex items-center">
       <div className="w-[25%]">

@@ -47,22 +47,22 @@ function Home() {
   function handleExpand() {
     setExpand(!expand);
   }
-  function handleMenuClick(data, id) {
+  function handleMenuClick(data: API.MenuItem[], id: number) {
     const updateMenuList = data.map((item) =>
       item.id === id
         ? { ...item, selected: true }
         : { ...item, selected: false },
     );
     setMenuList(updateMenuList);
-    let filerData = updateMenuList.find((item) => item.selected);
+    const filerData = updateMenuList.find((item) => item.selected);
     if (filerData) {
       setTitle(filerData.name);
+      navigate(filerData.path);
     }
-    navigate(filerData.path);
   }
   return (
     <div className="w-full absolute bottom-0 left-0 top-0 right-0 flex flex-col">
-      <TopBar expand={expand} onClick={handleExpand} title={title}></TopBar>
+      <TopBar onClick={handleExpand} title={title}></TopBar>
       <div className="grow flex flex-row">
         <MenuLeft
           status={expand}

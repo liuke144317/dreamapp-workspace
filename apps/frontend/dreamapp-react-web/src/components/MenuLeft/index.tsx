@@ -10,7 +10,7 @@ const MenuLeft: React.FC<MenuProps> = (props) => {
   function handleMenuItemClick(id: number) {
     props.onClick(props.data, id);
   }
-  let menuItem = props.data.map((item) => (
+  const menuItem = props.data.map((item) => (
     <div
       className="h-10 leading-10 flex items-center cursor-pointer group"
       key={item.id}
