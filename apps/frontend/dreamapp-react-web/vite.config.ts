@@ -4,7 +4,6 @@ import path from 'node:path';
 // const resolve = (dir: string) => {
 //   return path.resolve(__dirname, dir);
 // };
-function a(c, b) {}
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 console.log('process.cwd()', path.resolve(process.cwd(), 'src/assets/icons'));
 // https://vite.dev/config/
