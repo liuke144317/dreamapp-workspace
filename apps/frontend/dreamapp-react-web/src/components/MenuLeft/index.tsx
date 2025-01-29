@@ -30,7 +30,7 @@ const MenuLeft: React.FC<MenuProps> = (props) => {
   ));
   return (
     <div
-      className={`transition-[width] ease-in-out delay-150  overflow-hidden ${
+      className={`transition-[width] ease-in-out delay-150  overflow-hidden shrink-0 ${
         props.status
           ? 'border-r px-3 py-2 w-[160px]'
           : 'border-r px-3 py-2 w-[60px]'

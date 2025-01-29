@@ -63,13 +63,13 @@ function Home() {
   return (
     <div className="w-full absolute bottom-0 left-0 top-0 right-0 flex flex-col">
       <TopBar onClick={handleExpand} title={title}></TopBar>
-      <div className="grow flex flex-row">
+      <div className="grow flex flex-row min-h-0">
         <MenuLeft
           status={expand}
           data={menuList}
           onClick={handleMenuClick}
         ></MenuLeft>
-        <div className="flex-grow">
+        <div className="flex-grow h-full">
           <Outlet />
         </div>
       </div>

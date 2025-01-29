@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 // @ts-expect-error 引入插件要求写法
 import 'virtual:svg-icons-register';
-import '../mock/journal.ts';
+import '../mock';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
