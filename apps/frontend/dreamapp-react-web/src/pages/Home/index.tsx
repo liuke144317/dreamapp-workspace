@@ -1,10 +1,13 @@
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import MenuLeft from '@/components/MenuLeft';
 import TopBar from '@/components/TopBar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { setGlobalNavigate } from '@/utils/navigateUtils.ts';
 
 function Home() {
+  const location = useLocation();
   const navigate = useNavigate();
+  setGlobalNavigate(navigate);
   const [expand, setExpand] = useState(true);
   const [menuList, setMenuList] = useState([
     {
@@ -47,6 +50,19 @@ function Home() {
   function handleExpand() {
     setExpand(!expand);
   }
+  useEffect(() => {
+    console.log('currentPath', location.pathname);
+    const changeList = menuList.map((item) => {
+      if (location.pathname.indexOf(item.path) !== -1) {
+        setTitle(item.name);
+      }
+      return {
+        ...item,
+        selected: location.pathname.indexOf(item.path) !== -1,
+      };
+    });
+    setMenuList(changeList);
+  }, [location.pathname]);
   function handleMenuClick(data: API.MenuItem[], id: number) {
     const updateMenuList = data.map((item) =>
       item.id === id
@@ -57,6 +73,7 @@ function Home() {
     const filerData = updateMenuList.find((item) => item.selected);
     if (filerData) {
       setTitle(filerData.name);
+      console.log('filerData.path', filerData.path);
       navigate(filerData.path);
     }
   }

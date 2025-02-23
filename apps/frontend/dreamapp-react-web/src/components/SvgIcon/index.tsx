@@ -14,7 +14,7 @@ export default function SvgIcon(props: propsInterface) {
   const color = props.color ?? '';
   const profix = props.profix ?? 'icon';
   const className = props.className ?? '';
-  const onClick = props.onClick ?? null;
+  const onClick = props.onClick;
 
   const iconName = useMemo<string>(() => {
     return `#${profix}-${props.name}`;
@@ -25,7 +25,7 @@ export default function SvgIcon(props: propsInterface) {
       style={{
         height: size,
         width: size,
-        fill: 'currentColor' || color,
+        fill: color || 'currentColor',
         position: 'relative',
       }}
       className={className}

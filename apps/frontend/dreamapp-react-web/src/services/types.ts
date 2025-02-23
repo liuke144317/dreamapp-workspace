@@ -12,12 +12,32 @@ export interface RequestInterceptors {
   ) => InternalAxiosRequestConfig;
   requestInterceptorsCatch?: (err: AxiosError) => AxiosError;
   // 响应拦截
-  responseInterceptors?: <T = AxiosResponse>(config: T) => T;
+  // responseInterceptors?: <T = AxiosResponse>(config: T) => T;
+  responseInterceptors?: (config: AxiosResponse) => AxiosResponse;
   responseInterceptorsCatch?: (err: AxiosError) => AxiosError;
 }
 // 自定义传入的参数
 export interface RequestConfig extends AxiosRequestConfig {
   interceptors?: RequestInterceptors;
+}
+type responseType<T> = {
+  data: T;
+  message: string;
+  status: number;
+  tt: string;
+};
+export interface otherRequestConfig<T> extends AxiosRequestConfig {
+  interceptors?: {
+    // 请求拦截
+    requestInterceptors?: (
+      config: InternalAxiosRequestConfig,
+    ) => InternalAxiosRequestConfig;
+    requestInterceptorsCatch?: (err: AxiosError) => AxiosError;
+    // 响应拦截
+    // responseInterceptors?: <T = AxiosResponse>(config: T) => T;
+    responseInterceptors?: (config: responseType<T>) => responseType<T>;
+    responseInterceptorsCatch?: (err: AxiosError) => AxiosError;
+  };
 }
 export interface RequestConfigWithHeaders extends InternalAxiosRequestConfig {
   interceptors?: RequestInterceptors;

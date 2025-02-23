@@ -1,4 +1,46 @@
+import { Card } from 'antd';
+import { useNavigate } from 'react-router-dom';
 const ThreeJs = () => {
-  return <div>three.js</div>;
+  const navigate = useNavigate();
+  const arr = [
+    {
+      name: '草稿1',
+      des: '用于练习各种功能',
+      path: '/three_js_draft',
+    },
+    {
+      name: '建筑模型导入',
+      des: '导入gltf格式的建筑模型，并在模型上标点，允许交互，有加载动画',
+      path: '/three_js_build_gltf',
+    },
+    {
+      name: '骨骼动画',
+      des: '导入gltf格式的建筑模型',
+      path: '/three_js_build_gltf',
+    },
+    {
+      name: '关键帧动画',
+      des: '导入gltf格式的建筑模型',
+      path: '/three_js_build_gltf',
+    },
+  ];
+  const cardItems = arr.map((item, index) => {
+    return (
+      <Card
+        title={item.name}
+        bordered={false}
+        style={{ width: '100%' }}
+        className="mt-4 hover:cursor-pointer"
+        onClick={() => toPage(item.path)}
+        key={index}
+      >
+        <p>{item.des}</p>
+      </Card>
+    );
+  });
+  function toPage(path: string) {
+    navigate(path);
+  }
+  return <div className="grid grid-cols-6 gap-x-4 mx-4">{cardItems}</div>;
 };
 export default ThreeJs;

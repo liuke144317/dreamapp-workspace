@@ -4,7 +4,11 @@ import type {
   InternalAxiosRequestConfig,
   AxiosResponse,
 } from 'axios';
-import type { RequestConfig, RequestInterceptors } from './types';
+import type {
+  RequestConfig,
+  RequestInterceptors,
+  otherRequestConfig,
+} from './types';
 
 /*
  * 这里将其封装为一个类，而不是一个函数的原因是因为类可以创建多个实例，适用范围更广，封装性更强一些
@@ -15,7 +19,9 @@ class Request {
   interceptorsObj?: RequestInterceptors;
 
   constructor(config?: RequestConfig) {
+    console.log('config', config);
     this.instance = axios.create(config);
+    this.interceptorsObj = config?.interceptors;
     // 类拦截器
     this.instance.interceptors.request.use(
       (request: InternalAxiosRequestConfig) => {
@@ -40,16 +46,22 @@ class Request {
     // 类拦截器,全局响应拦截器保证最后执行
     this.instance.interceptors.response.use(
       (response: AxiosResponse) => {
-        console.log('全局响应拦截器');
+        console.log('全局响应拦截器', response);
         return response.data;
       },
       (error) => error,
     );
   }
   // request处可写三个泛型，响应数据的类型、响应对象的类型、请求体的类型
-  request<T>(config: RequestConfig) {
+  request<T>(config: otherRequestConfig<T>) {
+    type responseType = {
+      data: T;
+      message: string;
+      status: number;
+      tt: string;
+    };
     // 如果我们为单个请求设置拦截器，这里使用单个请求的拦截器
-    return new Promise<T>((resolve, reject) => {
+    return new Promise<responseType>((resolve, reject) => {
       if (config.interceptors?.requestInterceptors) {
         console.log('config.interceptors?.requestInterceptors');
         config = config.interceptors.requestInterceptors(
@@ -57,12 +69,12 @@ class Request {
         );
       }
       this.instance
-        .request<T, T>(config)
+        .request<responseType, responseType>(config)
         .then((res) => {
-          console.log('this.instance', res);
           // 如果我们为单个响应设置拦截器，这里使用单个响应的拦截器
           if (config.interceptors?.responseInterceptors) {
-            res = config.interceptors.responseInterceptors<T>(res);
+            // res = config.interceptors.responseInterceptors<responseType>(res);
+            res = config.interceptors.responseInterceptors(res);
           }
           resolve(res);
         })
@@ -74,25 +86,3 @@ class Request {
   }
 }
 export default Request;
-
-// const index = axios.create({
-//   baseURL: '',
-//   timeout: 5000,
-// });
-// index.interceptors.request.use(
-//   (config) => {
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   },
-// );
-// index.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   },
-// );
-// export default index;

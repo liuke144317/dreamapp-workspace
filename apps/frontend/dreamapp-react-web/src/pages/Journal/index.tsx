@@ -5,27 +5,35 @@ import { Image } from 'antd';
 import { formatTime } from '@/utils/formatTime.ts';
 
 const Journal = () => {
-  interface ContentItem {
-    list: {
-      id: number;
-      userImg: string;
-      date: string;
-      title: string;
-      nickname: string;
-      description: string;
-      imageArr: imageType[];
-      email: string;
-      userid: string;
-      topping: boolean;
-    }[];
-  }
-  const [contentItemList, setContentItemList] = useState<ContentItem['list']>(
-    [],
-  );
+  type ContentItem = {
+    id: number;
+    userImg: string;
+    date: string;
+    title: string;
+    nickname: string;
+    description: string;
+    imageArr: imageType[];
+    email: string;
+    userid: string;
+    topping: boolean;
+  };
+  const [contentItemList, setContentItemList] = useState<ContentItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  // let minIOShowPath = ''
   type imageType = {
     url: string;
   };
+  // async function getMinIOShowPath() {
+  //   return api.request<string>({
+  //     url: '/MinIO/ShowPath',
+  //     method: 'get',
+  //   });
+  // }
   useEffect(() => {
+    // const loginApiRes = await getMinIOShowPath()
+    // if (loginApiRes.status === 200) {
+    //   minIOShowPath = loginApiRes.data
+    // }
     // api.instance.get('/api/data').then((response) => {
     //   console.log('response', response);
     // });
@@ -34,19 +42,33 @@ const Journal = () => {
     //   // setContentItemList(res.data.list);
     // });
     api
-      .request<ContentItem>({
-        url: '/api/data',
-        method: 'GET',
+      .request<ContentItem[]>({
+        url: '/BLogs/Home/showList',
+        method: 'POST',
+        data: {
+          pageParams: {
+            pageSize: 10,
+            currentPage: 1,
+          },
+          params: {
+            labelName: '',
+            id: '',
+            read_password: '',
+            self: '',
+            isDetail: false,
+          },
+        },
       })
       .then((res) => {
-        console.log('res', res.list);
-        if (res.list) {
-          setContentItemList(res.list);
+        console.log('res', res.data);
+        setLoading(false);
+        if (res.data) {
+          setContentItemList(res.data);
         }
       });
   }, []);
   const userid = '';
-  function isTopping(item: ContentItem['list'][0]): boolean {
+  function isTopping(item: ContentItem): boolean {
     return userid === item.userid && item.topping;
   }
   const boxItem = contentItemList.map((item) => {
@@ -66,9 +88,26 @@ const Journal = () => {
             <div className="text-[15px] mt-[2px]">{item.title}</div>
           </div>
         </div>
+        <div className="bg-[#f6f6f6] rounded-[10px] text-left overflow-hidden">
+          <div
+            className="mx-[10px] my-[15px]"
+            style={{ width: 'calc(100% - 30px)' }}
+            dangerouslySetInnerHTML={{ __html: item.description }}
+          ></div>
+        </div>
       </div>
     );
   });
-  return <div className="w-full h-full overflow-auto">{boxItem}</div>;
+  return (
+    <div className="w-full h-full overflow-auto">
+      {loading ? (
+        <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+          加载中...
+        </div>
+      ) : (
+        boxItem
+      )}
+    </div>
+  );
 };
 export default Journal;
