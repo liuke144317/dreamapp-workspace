@@ -4,11 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // @ts-expect-error 默认导入方式
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const BuildGltf = () => {
-  console.log('11111');
-  const navigate = useNavigate();
   const threeDom = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true); // 管理加载状态
   const [progress, setProgress] = useState(0); // 存储加载进度
@@ -87,15 +84,6 @@ const BuildGltf = () => {
   }, []);
   return (
     <div className="h-full relative" ref={threeDom}>
-      <div
-        id="info"
-        className="absolute top-1 left-1 text-[#000] hover:cursor-pointer"
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        返回
-      </div>
       {loading ? (
         <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
           加载中：{progress}%

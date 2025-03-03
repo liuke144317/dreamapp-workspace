@@ -1,12 +1,10 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { useNavigate } from 'react-router-dom';
 
 /**
  * @description 用于练习各种功能的草稿
  */
 const Draft = () => {
-  const navigate = useNavigate();
   const threeDom = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const threeDiv = threeDom.current;
@@ -54,18 +52,6 @@ const Draft = () => {
       animate();
     }
   }, []);
-  return (
-    <div className="h-full relative" ref={threeDom}>
-      <div
-        id="info"
-        className="absolute top-1 left-1 text-[#fff] hover:cursor-pointer"
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        返回
-      </div>
-    </div>
-  );
+  return <div className="h-full relative" ref={threeDom}></div>;
 };
 export default Draft;

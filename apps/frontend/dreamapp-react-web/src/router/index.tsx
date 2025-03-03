@@ -12,10 +12,11 @@ import { lazy } from 'react';
 const FileSys = lazy(() => import('@/pages/FileSys'));
 const Film = lazy(() => import('@/pages/Film'));
 const ThreeJs = lazy(() => import('@/pages/ThreeJs'));
-const Draft = lazy(() => import('@/pages/ThreeJs/components/draft'));
-const BuildGltf = lazy(
-  () => import('@/pages/ThreeJs/components/build_gltf.tsx'),
-);
+const ThreeJsDetail = lazy(() => import('@/pages/ThreeJs/detail.tsx'));
+// const Draft = lazy(() => import('@/pages/ThreeJs/components/draft'));
+// const BuildGltf = lazy(
+//   () => import('@/pages/ThreeJs/components/build_gltf.tsx'),
+// );
 
 const routes = [
   {
@@ -27,8 +28,9 @@ const routes = [
       { path: 'file_sys', element: <FileSys /> },
       { path: 'film', element: <Film /> },
       { path: 'three_js', element: <ThreeJs /> },
-      { path: 'three_js_draft', element: <Draft /> },
-      { path: 'three_js_build_gltf', element: <BuildGltf /> },
+      { path: 'three_js_detail', element: <ThreeJsDetail /> },
+      // { path: 'three_js_draft', element: <Draft /> },
+      // { path: 'three_js_build_gltf', element: <BuildGltf /> },
     ],
   },
   { path: 'login', element: <Login /> },
